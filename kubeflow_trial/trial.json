@@ -1,0 +1,88 @@
+{
+  "pipelineSpec": {
+    "components": {
+      "comp-get-lines": {
+        "executorLabel": "exec-get-lines",
+        "inputDefinitions": {
+          "parameters": {
+            "input_1": {
+              "type": "STRING"
+            },
+            "parameter_1": {
+              "type": "INT"
+            }
+          }
+        },
+        "outputDefinitions": {
+          "parameters": {
+            "output_1": {
+              "type": "STRING"
+            }
+          }
+        }
+      }
+    },
+    "deploymentSpec": {
+      "executors": {
+        "exec-get-lines": {
+          "container": {
+            "command": [
+              "python3",
+              "/pipelines/component/src/program.py",
+              "--input1-path",
+              "{{$.inputs.parameters['input_1']}}",
+              "--param1",
+              "{{$.inputs.parameters['parameter_1']}}",
+              "--output1-path",
+              "{{$.outputs.parameters['output_1'].output_file}}"
+            ],
+            "image": "gcr.io/moth-recognition/simple_component_trial:latest"
+          }
+        }
+      }
+    },
+    "pipelineInfo": {
+      "name": "example-pipeline"
+    },
+    "root": {
+      "dag": {
+        "tasks": {
+          "get-lines": {
+            "cachingOptions": {
+              "enableCache": true
+            },
+            "componentRef": {
+              "name": "comp-get-lines"
+            },
+            "inputs": {
+              "parameters": {
+                "input_1": {
+                  "runtimeValue": {
+                    "constantValue": {
+                      "stringValue": "/pipelines/component/src/tst.txt"
+                    }
+                  }
+                },
+                "parameter_1": {
+                  "runtimeValue": {
+                    "constantValue": {
+                      "stringValue": "5"
+                    }
+                  }
+                }
+              }
+            },
+            "taskInfo": {
+              "name": "get-lines"
+            }
+          }
+        }
+      }
+    },
+    "schemaVersion": "2.0.0",
+    "sdkVersion": "kfp-1.8.16"
+  },
+  "runtimeConfig": {
+    "gcsOutputDirectory": "gs://moth-recognition-vertex-ai-pipelines-artifacts/pipeline_root/simple_trial"
+  }
+}

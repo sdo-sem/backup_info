@@ -1,0 +1,6 @@
+ File "/Users/sarah/My_projects/practice/maintenance_model_training/training_env/lib/python3.9/site-packages/google/cloud/aiplatform/base.py", line 730, in wrapper
+    return method(*args, **kwargs)
+  File "/Users/sarah/My_projects/practice/maintenance_model_training/training_env/lib/python3.9/site-packages/google/cloud/aiplatform/pipeline_jobs.py", line 252, in run
+    self._block_until_complete()
+  File "/Users/sarah/My_projects/practice/maintenance_model_training/training_env/lib/python3.9/site-packages/google/cloud/aiplatform/pipeline_jobs.py", line 349, in _block_until_complete
+    raise RuntimeError("Job failed with:\n%s" % self._gca_resource.error
